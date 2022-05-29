@@ -1,0 +1,163 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Qesh Project - Fabricio Martins",
+    "description": "Projeto de simulação de ecommerce consumindo API Mercado Livre para seleção da Qesh",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1",
+    "tags": [
+      {
+        "name": "Users",
+        "description": "API for users in the system"
+      },
+      {
+        "name": "Purchases",
+        "description": "Purchases made by users"
+      }
+    ],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/all-users": {
+        "get": {
+            "tags": ["All Users"],
+            "summary": "Get all users in system",
+            "responses": {
+            "200": {
+                "description": "OK",
+                "schema": {
+                "$ref": "#/definitions/Users"
+                }
+            }
+            },
+            "security": [
+                {
+                  "JWT": []
+                }
+            ]
+        }
+        },
+        "/users": {
+        "post": {
+            "tags": ["User"],
+            "description": "Create new user in system",
+            "parameters": [
+            {
+                "name": "username",
+                "in": "body",
+                "description": "Username that we want to create",
+                "schema": {
+                "$ref": "#/definitions/username"
+                }
+            },
+            {
+                "name": "email",
+                "in": "body",
+                "description": "User's email",
+                "schema": {
+                "$ref": "#/definitions/email"
+                }
+            },
+            {
+                "name": "password",
+                "in": "body",
+                "description": "User's password for login",
+                "schema": {
+                "$ref": "#/definitions/password"
+                }
+            }
+            ],
+            "produces": ["application/json"],
+            "responses": {
+            "200": {
+                "description": "New user is created",
+                "schema": {
+                "$ref": "#/definitions/User"
+                }
+                }
+            }
+        }
+        },
+        "/purchase-product": {
+        "post": {
+            "tags": ["Purchases"],
+            "description": "Save in DB a new purchase made by user",
+            "parameters": [
+            {
+                "name": "productId",
+                "in": "body",
+                "description": "ProductId got in ProductRoutes",
+                "schema": {
+                "$ref": "#/definitions/productId"
+                }
+            },
+            {
+                "name": "quantity",
+                "in": "body",
+                "description": "Quantity of products",
+                "schema": {
+                "$ref": "#/definitions/quantity"
+                }
+            }
+            ],
+            "produces": ["application/json"],
+            "responses": {
+            "200": {
+                "description": "Compra efetuada com sucesso",
+                "schema": {
+                "$ref": "#/definitions/User"
+                }
+                }
+            }
+        }
+        }
+    },
+    "securityDefinitions": {
+        "JWT": {
+          "type": "apiKey",
+          "name": "x-access-token",
+          "in": "header"
+        }
+    },
+    "definitions": {
+        "User": {
+          "properties": {
+            "username": {
+              "type": "string",
+              "uniqueItems": true
+            },
+            "email": {
+              "type": "string",
+              "uniqueItems": true
+            },
+            "password": {
+              "type": "string",
+              "uniqueItems": true
+            },
+            "created": {
+              "type": "Date"
+            },
+            "updated": {
+              "type": "Date"
+            }
+          },
+            "required": [
+            "userName",
+            "email",
+            "password"
+            ] 
+        },
+        "Purchase": {
+            "properties": {
+
+            } 
+        }
+    }
+}
