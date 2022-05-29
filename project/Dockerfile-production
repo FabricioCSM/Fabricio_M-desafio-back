@@ -1,0 +1,14 @@
+FROM node:14.2.0-stretch as production
+
+WORKDIR /
+
+COPY package*.json ./
+RUN npm i --production --verbose
+COPY --from=build /src/node_modules node_modules
+ENV NODE_ENV production
+ENV PORT 3000
+EXPOSE 3000
+
+RUN npm run build
+
+CMD ["npm", "start"]

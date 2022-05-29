@@ -1,0 +1,19 @@
+version: "3.3"
+
+services:
+  qesh-api:
+    container_name: qesh-api
+    build:
+      context: ./
+      dockerfile: ./Dockerfile-production
+    restart: always
+    environment:
+      - PORT=3000
+    ports:
+      - 3333:3000
+    networks:
+      - qesh
+
+networks:
+  qesh:
+    external: true
