@@ -3,15 +3,33 @@ import { Dialect, Sequelize } from 'sequelize';
 
 dotenv.config();
 
-  const dbUser = process.env.DB_USERNAME as string
-  const dbPassword = process.env.DB_PASSWORD as string
-  const database = process.env.DB_DATABASE as string
-  const dbHost = process.env.DB_HOST
-  const dialect = process.env.DB_CLIENT as Dialect
+const environment = {
+  development: {
+    username: process.env.DB_USERNAME as string,
+    password: process.env.DB_PASSWORD as string,
+    database: process.env.DB_DATABASE as string,
+    host: process.env.HOSTNAME,
+    dialect: process.env.DB_CLIENT as Dialect,
+  },
+  test: {
+    username: process.env.DB_USERNAME as string,
+    password: process.env.DB_PASSWORD as string,
+    database: process.env.DB_DATABASE as string,
+    host: process.env.HOSTNAME,
+    dialect: process.env.DB_CLIENT as Dialect,
+  },
+  production: {
+    username: process.env.DB_USERNAME as string,
+    password: process.env.DB_PASSWORD as string,
+    database: process.env.DB_DATABASE as string,
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_CLIENT as Dialect,
+  }
+}
 
-const sequelizeConnection = new Sequelize(database, dbUser, dbPassword, {
-  host: dbHost,
-  dialect: dialect
+const sequelizeConnection = new Sequelize(environment.development.database, environment.development.username, environment.development.password, {
+  host: environment.development.host,
+  dialect: environment.development.dialect
 })
 
 export default sequelizeConnection;
